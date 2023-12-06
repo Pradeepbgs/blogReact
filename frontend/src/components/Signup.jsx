@@ -6,38 +6,39 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../utils/authSlice';
 
-export default function Login() {
-  const [error, setError] = useState("");
-  const { register, handleSubmit , reset} = useForm();
+export default function Signup() {
+    const [error, setError] = useState("");
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function createUser(data){
     setError("")
     try {
-        const user = await axios.post("http://localhost:3000/login", data);
-        reset()
-        console.log(user.data.user);
+        const user = await axios.post("http://localhost:3000/signup", data);
         dispatch(login({...user.data.user, password: "its secret", email:"its secret", _id: "pata nahi"}));
-        console.log(user.data.user);
-        console.log("login success");
-      navigate('/');
+        console.log("signup success");
+        navigate('/');
     } catch (error) {
-      setError(error)
-      reset()
-      console.log("login error:", error.response?.data.error);
+        setError(error)
+        console.log("signup error:", error.response?.data.error);
+        throw error
       // Display an error message to the user
     }
   };
- 
 
   return (
     <div className='w-[100%] h-[100%] flex justify-center mt-10' >
       <div className='bg-gray-300 px-20 py-10 text-center rounded-md'>
-        <h2 className='text-3xl mb-5 font-semibold'>Login</h2>
+        <h2 className='text-3xl mb-5 font-semibold'>Register</h2>
         <p className='text-red-400'>{error.response?.data.error}</p>
         <div className=''>
           <form onSubmit={handleSubmit(createUser)} className='w-64'>
+            <Input
+              type="text"
+              placeholder='FullName'
+              {...register('name')}
+            />
             <Input
               type='email'
               placeholder='Enter your Email'
@@ -52,10 +53,10 @@ export default function Login() {
               type='submit'
               className='bg-blue-500 px-[40%] py-3 text-white rounded-md'
             >
-              Login
+              Register
             </button>
             <p className='text-blue-600 mt-3'>
-            <NavLink to='/signup' className=''>Create Account Signup</NavLink>
+            <NavLink to='/login' className=''>Already a user ? Signin</NavLink>
             </p>
           </form>
         </div>

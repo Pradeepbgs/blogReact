@@ -1,11 +1,12 @@
 import express from 'express';
 // import handleSubmitLogin from '../controllers/user.controller.js';
-import handleSubmitRegister from '../controllers/user.controller.js';
+import {handleSubmitRegister, handleSubmitLogin} from '../controllers/user.controller.js';
 
 const router = express.Router();
 
 
-router.post('/login', handleSubmitRegister);
+router.post('/signup', handleSubmitRegister);
+router.post('/login', handleSubmitLogin);
 
 
 
