@@ -17,15 +17,16 @@ export default function Login() {
     try {
         const user = await axios.post("http://localhost:3000/login", data);
         reset()
-        console.log(user.data.user);
-        dispatch(login({...user.data.user, password: "its secret", email:"its secret", _id: "pata nahi"}));
-        console.log(user.data.user);
+        console.log(user);
+        dispatch(login(user.data));
+        console.log(user.data);
         console.log("login success");
       navigate('/');
     } catch (error) {
       setError(error)
       reset()
       console.log("login error:", error.response?.data.error);
+      throw error
       // Display an error message to the user
     }
   };

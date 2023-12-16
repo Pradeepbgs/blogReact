@@ -1,13 +1,28 @@
 import express from 'express';
-// import handleSubmitLogin from '../controllers/user.controller.js';
-import {handleSubmitRegister, handleSubmitLogin} from '../controllers/user.controller.js';
-
+import {handleSubmitRegister, handleSubmitLogin, handleSubmitLogout} from '../controllers/user.controller.js';
+import allpost from '../controllers/allpost.controller.js';
+import { addPost } from '../controllers/addPost.js';
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    console.log(req.user, 'FROM app.js');
+    if (req.user) {
+        res.status(200).json({ valid: true,user: req.user});
+    } else {
+        res.status(401).json({ valid: false, user: null });
+    }
+});
 
-router.post('/signup', handleSubmitRegister);
+router.get('/signin', (req, res) => {
+    res.render('signin')
+})
+
+router.get('/allpost', allpost)
+
+router.post('/register', handleSubmitRegister);
 router.post('/login', handleSubmitLogin);
-
+router.post('/logout', handleSubmitLogout)
+router.post('/add-post', addPost)
 
 
 

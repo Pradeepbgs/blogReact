@@ -6,9 +6,9 @@ import './index.css'
 import {   RouterProvider, createBrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import Home from './components/Home.jsx'
-import {Login} from './components/index.js'
+import {Login, Signup, AddPost, AllPost} from './components/index.js'
 import store from './utils/store.js'
-import Signup from './components/Signup.jsx'
+
 
 
  const router = createBrowserRouter([
@@ -27,6 +27,14 @@ import Signup from './components/Signup.jsx'
         {
           path:"/signup",
           element: <Signup/>,
+        },
+        {
+          path:"/allpost",
+          element: <AllPost/>
+        },
+        {
+          path: 'addpost',
+          element: <AddPost/>,
         }
       ]
      }
