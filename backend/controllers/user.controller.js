@@ -100,4 +100,8 @@ async function handleSubmitLogout(req, res, next) {
    )
 }
 
-export { handleSubmitLogin, handleSubmitRegister , handleSubmitLogout};
+export { 
+  handleSubmitLogin, 
+  handleSubmitRegister , 
+  handleSubmitLogout
+};
