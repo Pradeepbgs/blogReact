@@ -84,7 +84,7 @@ async function handleSubmitLogin(req, res, next) {
 
 async function handleSubmitLogout(req, res, next) {
    await User.findByIdAndUpdate(req.user?._id, {
-    $set: { refreshToken: undefined },
+    $set: { refreshToken: null },
    }, { new : true });
 
    const options = {
