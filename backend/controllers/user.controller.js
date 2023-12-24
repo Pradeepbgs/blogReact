@@ -1,6 +1,9 @@
 import { User } from "../models/user.model.js";
 import { apiError } from "../utils/apiError.js";
 import {apiResponse}  from '../utils/apiResponse.js'
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { Post } from "../models/post.model.js";
+
 
 const generateAccessAndRefreshToken = async (userId) => {
    try {
@@ -100,8 +103,94 @@ async function handleSubmitLogout(req, res, next) {
    )
 }
 
+async function addPost(req, res){
+  try {
+      const {title, description, image, createdBy} = req.body;
+      const user = req.user;
+
+      const imagePath = req.files?.image[0].path;
+
+      if(!imagePath) return res.status(400).json({message: "Image is required"})
+
+      const post = await uploadOnCloudinary(imagePath)
+      if(!post) res.status(400).json({message: "image uploading problem on cloudinary"})
+     const createdPost =  await Post.create({
+          title,
+          description,
+          image: post.url,
+          createdBy: user._id,
+      })
+      if(!createdPost) res.status(400).json({message: "post not created"})
+      res.status(200),json({message: "post created successfully", post: createdPost})
+  } catch (error) {
+      console.log("error in server, addpost.js")
+     res.json(400, error?.message || "something went wrong while adding post , pls try again")
+  }
+}
+
+async function allpost(req, res){
+
+  try {
+    if(!req.user){
+        return res.status(400).json({message: "User not found"});
+    }
+  
+    const user = await User.findById(req.user._id).populate("post");
+  
+    return res
+    .status(200)
+    .json(200 , {posts: user.post}, "Post find successfully");
+    
+  } catch (error) {
+    res.status(400).json({message: "something went wrong while finding post"})
+  }
+}
+
+
+const editPost = async (req, res) => {
+    const { id } = req.params;
+    const { title, description , image} = req.body;
+    
+   try {
+
+     if(!id) return res.status(400).json({message: "Post id is required"})
+
+    const post = await Post.findById(id);
+    if(!post) return res.status(400).json({message: "Post not found"})
+
+    if(title){
+      post.title = title;
+      await post.save();
+    }
+    if(description){
+      post.description = description;
+      await post.save();
+    }
+    if(image){
+      const imagePath = req.files?.image[0].path;
+      const postImage = await uploadOnCloudinary(imagePath)
+      if(!postImage) res
+      .status(400)
+      .json({message: "image uploading problem on cloudinary"})
+      post.image = postImage.url;
+      await post.save();
+    }
+
+    return res
+    .status(200)
+    .json(200 , {post}, "Post find successfully");
+
+
+   } catch (error) {
+    console.log("error in server, editpost.js")
+    res.json(400, error?.message || "something went wrong while editing post , pls try again")
+   }
+}
+
 export { 
   handleSubmitLogin, 
   handleSubmitRegister , 
-  handleSubmitLogout
+  handleSubmitLogout,
+  addPost,
+  allpost,
 };
