@@ -5,7 +5,6 @@ import { addPost } from '../controllers/addPost.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    console.log(req.user, 'FROM app.js');
     if (req.user) {
         res.status(200).json({ valid: true,user: req.user});
     } else {
@@ -14,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-    res.render('signin')
+    res.status(200).json({ valid: true, user: req.user });
 })
 
 router.get('/allpost', allpost)
