@@ -14,6 +14,7 @@ const Input = forwardRef(function Input({
         {...props}
         ref={ref}
         id={id}
+        {...props}
          />
     )
 })
