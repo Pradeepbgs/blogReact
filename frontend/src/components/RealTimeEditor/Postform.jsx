@@ -9,7 +9,7 @@ const Postform = () => {
 
 
   return (
-    <div className='w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500
+    <div className='w-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
      items-center justify-center py-6 px-10'>
         <div className='bg-gray-300 bg-opacity-30 px-10 py-5'>
       <form action="" className=''>
