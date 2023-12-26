@@ -11,7 +11,7 @@ const Postform = () => {
   return (
     <div className='w-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
      items-center justify-center py-6 px-10'>
-        <div className='bg-gray-300 bg-opacity-30 px-10 py-5'>
+        <div className='bg-gray-300 bg-opacity-30 px-10 py-5 rounded-lg'>
       <form action="" className=''>
         <div className='flex justify-between'> 
             <div className='flex flex-col mr-10'>
@@ -19,7 +19,7 @@ const Postform = () => {
              type="text"
              placeholder="Title"
              name="title"
-             className="mb-4 py-3 rounded-md text-center"
+             className="mb-4 py-3 rounded-md bg-gray-100"
              {...register('title', {required: true})}
             />
             <Input

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -26,9 +26,11 @@ useEffect(() => {
 
 
   return (
+    <>
     <div className='flex justify-center mt-10'>
       home
     </div>
+    </>
   )
 }
 
