@@ -47,7 +47,7 @@ async function handleSubmitRegister(req, res, next) {
   }
 }
 
-async function handleSubmitLogin(req, res, next) {
+async function handleSubmitLogin(req, res) {
   const { email, password } = req.body;
 
   if(!(email || password)){
@@ -84,8 +84,7 @@ async function handleSubmitLogin(req, res, next) {
    ))
 }
 
-
-async function handleSubmitLogout(req, res, next) {
+async function handleSubmitLogout(req, res) {
    await User.findByIdAndUpdate(req.user?._id, {
     $set: { refreshToken: null },
    }, { new : true });
@@ -146,10 +145,10 @@ async function allpost(req, res){
   }
 }
 
-
 const editPost = async (req, res) => {
     const { id } = req.params;
-    const { title, description , image} = req.body;
+    const { title, description} = req.body;
+    const {image} = req.file;
     
    try {
 
@@ -158,34 +157,36 @@ const editPost = async (req, res) => {
     const post = await Post.findById(id);
     if(!post) return res.status(400).json({message: "Post not found"})
 
-    if(title){
-      post.title = title;
-      await post.save();
-    }
-    if(description){
-      post.description = description;
-      await post.save();
-    }
+    if(title) post.title = title;
+    if(description) post.description = description;
+
     if(image){
-      const imagePath = req.files?.image[0].path;
+      const imagePath = req.file.path;
       const postImage = await uploadOnCloudinary(imagePath)
-      if(!postImage) res
-      .status(400)
-      .json({message: "image uploading problem on cloudinary"})
+
+      if(!postImage){
+        return res
+        .status(400)
+        .json({message: "image uploading problem on cloudinary"})
+      }
+
       post.image = postImage.url;
-      await post.save();
     }
+
+    await post.save();
 
     return res
     .status(200)
-    .json(200 , {post}, "Post find successfully");
+    .json( {post}, "Post updated successfully");
 
 
    } catch (error) {
-    console.log("error in server, editpost.js")
+    console.log("error in server user.controller.js")
     res.json(400, error?.message || "something went wrong while editing post , pls try again")
    }
 }
+
+
 
 export { 
   handleSubmitLogin, 
@@ -193,4 +194,5 @@ export {
   handleSubmitLogout,
   addPost,
   allpost,
+  editPost,
 };

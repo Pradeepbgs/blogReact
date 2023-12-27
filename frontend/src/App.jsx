@@ -6,7 +6,8 @@ function App() {
 
   return (
     <>
-     <div className="h-[100%] w-[100%]">
+     <div className="">
+      <div className="bg-gray-100 h-[100vh]">
       <div>
         <Header/>
       </div>
@@ -15,6 +16,7 @@ function App() {
       </div>
       <div>
         <Footer/>
+      </div>
       </div>
      </div>
     </>

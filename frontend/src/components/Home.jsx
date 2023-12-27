@@ -27,8 +27,10 @@ useEffect(() => {
 
   return (
     <>
-    <div className='flex justify-center mt-10'>
-      home
+    <div className='flex justify-center bg-gray-200 h-full'>
+      <div className='mt-10'>
+        home
+      </div>
     </div>
     </>
   )

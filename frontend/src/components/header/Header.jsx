@@ -31,15 +31,16 @@ export default function Header() {
     ]
   return (
     <div>
-      <nav className='bg-gray-300 flex justify-between items-center px-16 py-3 '>
+      <nav className='bg-gray-300 flex justify-between items-center px-16 py-3 
+      border-b-2 border-gray-400'>
         <ul>
-            <li><NavLink to="/">LOGO</NavLink></li>
+            <li className=' font-serif'><NavLink to="/">LOGO</NavLink></li>
         </ul>
         <ul className='flex ml-auto'>
             {
                 names.map((item,index)=> item.active? (
                     <NavLink to={item.url} key={index}>
-                        <button className='ml-9 px-6 py-2 rounded-full hover:bg-gray-200'>{item.name}</button>
+                        <button className='ml-9 px-6 py-2 font-mono textwh rounded-full hover:bg-gray-200'>{item.name}</button>
                     </NavLink>
                 ): null )
             }

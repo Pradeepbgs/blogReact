@@ -3,7 +3,7 @@ import Footer from "./footer/Footer";
 import Login from "./Login";
 import Signup from "./Signup";
 import AddPost from "./AddPost";
-import AllPost from "./AllPost";
+import AllPost from "./allpost/AllPost";
 
 export {
     Header,
